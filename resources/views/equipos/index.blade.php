@@ -40,25 +40,29 @@
                         <td>{{ $equipo->categoria }}</td>
                         <td>{{ $equipo->marca }}</td>
                         <td>
-                            @if($equipo->estado === 'Disponible')
+                            {{-- Modificado usando == y trim() para romper la restricción estricta --}}
+                            @if(trim($equipo->estado) == 'Disponible')
                                 <span class="badge bg-success">Disponible</span>
-                            @elseif($equipo->estado === 'Prestado')
+                            @elseif(trim($equipo->estado) == 'Prestado')
                                 <span class="badge bg-warning text-dark">Prestado</span>
-                            @else
+                            @elseif(trim($equipo->estado) == 'Mantenimiento')
                                 <span class="badge bg-danger">Mantenimiento</span>
+                            @else
+                                {{-- En caso de que guarde otra variante, te lo muestra en gris para saber qué llegó --}}
+                                <span class="badge bg-secondary">{{ $equipo->estado }}</span>
                             @endif
                         </td>
-                       <td class="text-center">
-    <a href="{{ route('equipos.edit', $equipo->id) }}" class="btn btn-sm btn-info text-white">Editar</a>
+                        <td class="text-center">
+                            <a href="{{ route('equipos.edit', $equipo->id) }}" class="btn btn-sm btn-info text-white">Editar</a>
 
-    <form action="{{ route('equipos.destroy', $equipo->id) }}" method="POST" class="d-inline-block">
-        @csrf
-        @method('DELETE')
-        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Seguro que deseas eliminar este equipo?')">
-            Eliminar
-        </button>
-    </form>
-</td>
+                            <form action="{{ route('equipos.destroy', $equipo->id) }}" method="POST" class="d-inline-block">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Seguro que deseas eliminar este equipo?')">
+                                    Eliminar
+                                </button>
+                            </form>
+                        </td>
                     </tr>
                 @empty
                     <tr>

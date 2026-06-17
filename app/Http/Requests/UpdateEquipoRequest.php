@@ -7,18 +7,25 @@ use Illuminate\Validation\Rule;
 
 class UpdateEquipoRequest extends FormRequest
 {
+    /**
+     * Determine if the user is authorized to make this request.
+     */
     public function authorize(): bool
     {
-        return true; // <-- Recuerda dejarlo en true para que te permita usarlo
+        // ⚠️ Asegúrate de cambiar esto a true para que te permita usarlo
+        return true;
     }
 
+    /**
+     * Get the validation rules that apply to the request.
+     */
     public function rules(): array
     {
-        // Buscamos el parámetro de la ruta de forma segura
-        $equipoParam = $this->route('equipo') ?? $this->route('id');
+        // Obtenemos el equipo que viene desde la ruta de manera segura
+        $equipo = $this->route('equipo');
 
-        // Si es el objeto completo, extraemos solo el número ID
-        $equipoId = is_object($equipoParam) ? $equipoParam->id : $equipoParam;
+        // Si por alguna razón pasa como ID (string/int), extraemos el valor
+        $equipoId = is_object($equipo) ? $equipo->id : $equipo;
 
         return [
             'codigo' => [
@@ -26,10 +33,10 @@ class UpdateEquipoRequest extends FormRequest
                 'string',
                 Rule::unique('equipos', 'codigo')->ignore($equipoId),
             ],
-            'nombre' => 'required|string|max:100',
+            'nombre'    => 'required|string|max:100',
             'categoria' => 'required|string',
-            'marca' => 'required|string',
-            'estado' => 'required|in:Disponible,Prestado,Mantenimiento',
+            'marca'     => 'required|string',
+            'estado'    => 'required|in:Disponible,Prestado,Mantenimiento',
         ];
     }
 }

@@ -45,17 +45,16 @@
             </div>
 
             <div class="mb-3">
-    <label class="form-label font-weight-bold">Estado del Equipo</label>
-
-    <select name="estado" class="form-select @error('estado') is-invalid @enderror">
-        <option value="Disponible" {{ old('estado', $equipo->estado) == 'Disponible' ? 'selected' : '' }}>Disponible</option>
-        <option value="Prestado" {{ old('estado', $equipo->estado) == 'Prestado' ? 'selected' : '' }}>Prestado</option>
-        <option value="Mantenimiento" {{ old('estado', $equipo->estado) == 'Mantenimiento' ? 'selected' : '' }}>Mantenimiento</option>
-    </select>
-
-
-    @error('estado') <div class="invalid-feedback">{{ $message }}</div> @enderror
-</div>
+                <label class="form-label font-weight-bold">Estado del Equipo</label>
+                <select name="estado" class="form-select @error('estado') is-invalid @enderror">
+                    <option value="Disponible" {{ old('estado', $equipo->estado) == 'Disponible' ? 'selected' : '' }}>Disponible</option>
+                    <option value="Prestado" {{ old('estado', $equipo->estado) == 'Prestado' ? 'selected' : '' }}>Prestado</option>
+                    <option value="Mantenimiento" {{ old('estado', $equipo->estado) == 'Mantenimiento' ? 'selected' : '' }}>Mantenimiento</option>
+                </select>
+                @error('estado')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
 
             <hr>
 
