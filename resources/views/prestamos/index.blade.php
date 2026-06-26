@@ -91,7 +91,7 @@
                                     <span class="text-muted small align-self-center">Completado</span>
                                 @endif
 
-                                <a href="{{ route('prestamos.pdf', $prestamo->id) }}" class="btn btn-sm btn-outline-danger d-inline-flex align-items-center gap-1" style="border-radius: 8px; font-size: 0.8rem;">
+                                <a href="{{ route('prestamos.pdf', $prestamo->id) }}" target="_blank" class="btn btn-sm btn-outline-danger d-inline-flex align-items-center gap-1" style="border-radius: 8px; font-size: 0.8rem;">
                                     📄 PDF
                                 </a>
                             </div>

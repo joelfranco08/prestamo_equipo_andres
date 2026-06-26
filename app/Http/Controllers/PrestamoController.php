@@ -7,6 +7,7 @@ use App\Models\Equipo;
 use App\Models\Solicitante;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PrestamoController extends Controller
 {
@@ -75,5 +76,16 @@ class PrestamoController extends Controller
         });
 
         return redirect()->route('prestamos.index')->with('success', 'Equipo recibido con éxito. Su estado ha cambiado a Disponible.');
+    }
+    public function generarPdf($id)
+    {
+        // Buscamos el préstamo con sus relaciones cargadas
+        $prestamo = Prestamo::with(['equipo', 'solicitante'])->findOrFail($id);
+
+        // Cargamos la vista limpia que crearemos a continuación
+        $pdf = Pdf::loadView('prestamos.pdf', compact('prestamo'));
+
+        // Retornamos el archivo para abrirse directamente en el navegador
+        return $pdf->stream('comprobante-prestamo-' . $prestamo->id . '.pdf');
     }
 }
